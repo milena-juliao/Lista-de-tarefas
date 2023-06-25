@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.container_tarefas{
+    width: 100%;
+    min-height: 100vh;
+    background-color: aqua;
+}
+
+.container_tarefas .content_tarefas{
+    width: 80%;
+    background-color: aquamarine;
+    flex-direction: column;
+}
+
+.container_tarefas, .content_tarefas{
+    display: flex;
+    justify-content: center;
+}

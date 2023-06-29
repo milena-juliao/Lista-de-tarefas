@@ -22,6 +22,7 @@
     $query = "SELECT * FROM tarefas";
     $todas_tarefas = $conexao->query($query)->fetch_all(MYSQLI_ASSOC);//busca todas as tarefas e o MYSQLI_ASSOC faz com que seja associado o índice ao nome das colunas.
 
+    $todas_tarefas_reverse = array_reverse($todas_tarefas);
     // var_dump($todas_tarefas);
 
     //UPDATE
@@ -50,41 +51,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="estilo.css">
+    <link type="text/css" href="estilo.css" rel="stylesheet" >
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
     <title>Lista de Tarefas</title>
 </head>
 <body>
     <div class="container_tarefas">
-        <div class="content_tarefas">
+        <div class="header_tarefas">
+            <img src="./images/logo_tarefas.png"/>
             <h1>Lista de Tarefas</h1>
-            <form method="post">
-                <h2>Adicionar nova tarefa</h2>
+        </div>
+        <div class="content_tarefas">
+            <div class="add_view_tarefas">
+                <form method="post">
+                    
+                    <div class="inputs_tarefas titulo_tarefas">
+                        <label for="titulo">Título</label>
+                        <input id="titulo" type="text" name="titulo" placeholder="Digite o título da tarefa"/>
+                    </div>
+                    
+                    <div class="inputs_tarefas desc_tarefas">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" type="text" name="descricao" placeholder="Digite a descrição da tarefa"></textarea>
+                    </div>                
 
-                <label for="titulo">Título</label>
-                <input id="titulo" type="text" name="titulo" placeholder="Digite o título da tarefa"/>
+                    <input class="btn_add_tarefas" type="submit" name="submit" value="Adicionar"/>
+                </form>
 
-                <label for="descricao">Descrição</label>
-                <input id="descricao" type="text" name="descricao" placeholder="Digite a descrição da tarefa"/>
+                <div class="listagem_tarefas">
+                    <ul>
+                        <?php foreach($todas_tarefas_reverse as $item){?>
+                            <li>
+                                <div class="infos_tarefa">
+                                    <div>
+                                        <h3><?=$item['titulo']?></h3>
+                                        <p><?=$item['descricao']?></p>
+                                    </div>
+                                    <div>
+                                        <span><b>criação:</b> <?=$item['data_criacao']?></span>
+                                        <?php if($item['data_conclusao'] !== '0000-00-00 00:00:00'){?>
+                                        <span><b>conclusão:</b> <?=$item['data_conclusao']?></span>
+                                        <?php } ?>
+                                    </div>
+                                </div>
 
-                <input type="submit" name="submit" value="Adicionar"/>
-            </form>
+                                <div class="btns_tarefas">
+                                    
+                                    <a href="?excluir=<?= $item['id']?>" class="btn_acao">
+                                        <img src="./images/delete_tarefas.png" />
+                                        Excluir
+                                    </a>
 
-            <div class="listagem_tarefas">
-                <ul>
-                    <?php foreach($todas_tarefas as $item){?>
-                        <li>
-                            <h3><?=$item['titulo']?></h3>
-                            <p><?=$item['descricao']?></p>
-
-                            <div class="btns_tarefas">
-                                <?php if($item['data_conclusao'] == '0000-00-00 00:00:00'){?>
-                                    <a href="?concluir=<?= $item['id']?>">Feito</a>
-                                <?php }; ?>
-                                <a href="?excluir=<?= $item['id']?>">Excluir</a>
-                            </div>
-                        </li>
-                    <?php };?>
-                </ul>
+                                    <?php if($item['data_conclusao'] == '0000-00-00 00:00:00'){?>
+                                        <a href="?concluir=<?= $item['id']?>" class="btn_acao">
+                                            <img src="./images/check_tarefas.png" />
+                                            Feito
+                                        </a>
+                                    <?php }; ?>
+                                </div>
+                            </li>
+                        <?php };?>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

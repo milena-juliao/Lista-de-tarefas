@@ -25,6 +25,4 @@
   <li>Delete - Exclusão da tarefa ao clicar em "Excluir"</li>
 </ul>
 
-<b>Link Projeto:</b><a href="http://192.168.15.9/projeto_lista_de_tarefas/" target="_blank"> Projeto Final Web</a>
-
 

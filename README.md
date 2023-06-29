@@ -12,6 +12,11 @@
 
 ![image](https://github.com/milena-juliao/Lista-de-tarefas/assets/84363761/fa1b3ba6-c394-4f29-88c4-37e5220eba02)
 
+<b>Mobile</b>
+</br>
+![image](https://github.com/milena-juliao/Lista-de-tarefas/assets/84363761/b96aeec0-3ad8-492b-9657-801f724fb27a)
+
+
 <h2>CRUD:</h2>
 <ul>
   <li>Create - Criação da tarefa, enviada através do clique no botão "Adicionar"</li>

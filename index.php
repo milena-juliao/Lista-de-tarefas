@@ -3,19 +3,22 @@
 
     //Verifica se está recebendo o valor do campo
     if(isset($_POST['submit'])){
-        
+
         //Armazena os dados digitados nas variáveis
         $titulo = $_POST['titulo'];
         $descricao = $_POST['descricao'];
-        // $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_STRING);
-        // $descricao = filter_input(INPUT_POST, 'descricao', FILTER_SANITIZE_STRING);
         
-        //POST
-        $query = "INSERT INTO `tarefas`(`id`, `titulo`, `descricao`, `data_criacao`, `data_conclusao`) VALUES ('','$titulo','$descricao',now(),'')";
-        $stm = $conexao->prepare($query);
-        $stm->execute();
+        if(!empty($titulo) && !empty($descricao)){
+            //POST
+            $query = "INSERT INTO `tarefas`(`id`, `titulo`, `descricao`, `data_criacao`, `data_conclusao`) VALUES ('','$titulo','$descricao',now(),'')";
+            $stm = $conexao->prepare($query);
+            $stm->execute();
+    
+            header('Location: http://189.47.41.71:8221/projeto_lista_de_tarefas/');//redireciona para a index, limpando o formulário
+        }
 
-        header('Location: http://192.168.15.9/projeto_lista_de_tarefas/');//redireciona para a index, limpando o formulário
+        // header('Location: http://localhost:8221/projeto_lista_de_tarefas/');//redireciona para a index, limpando o formulário
+        
     }
 
     //SELECT
@@ -27,22 +30,26 @@
 
     //UPDATE
     if(isset($_GET['concluir'])){
+        $loading = true;
         $id = $_GET['concluir'];
         $query = "UPDATE `tarefas` SET `data_conclusao`= now() WHERE id=$id";
         $stm = $conexao->prepare($query);
         $stm->execute();
 
-        header('Location: http://192.168.15.9/projeto_lista_de_tarefas/');
+        header('Location: http://189.47.41.71:8221/projeto_lista_de_tarefas/');
+        // header('Location: http://localhost:8221/projeto_lista_de_tarefas/');
     }
 
     //DELETE
     if(isset($_GET['excluir'])){
+        $loading = true;
         $id = $_GET['excluir'];
         $query = "DELETE FROM `tarefas` WHERE id=$id";
         $stm = $conexao->prepare($query);
         $stm->execute();
 
-        header('Location: http://192.168.15.9/projeto_lista_de_tarefas/');
+        header('Location: http://189.47.41.71:8221/projeto_lista_de_tarefas/');
+        // header('Location: http://localhost:8221/projeto_lista_de_tarefas/');
     }
 ?>
 
@@ -55,9 +62,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Lista de Tarefas</title>
+
+    <script>
+        function bloquearTela() {
+            var loading = document.getElementById('loading_tarefas');
+
+            loading.style.display = 'block';
+        }
+    </script>
 </head>
 <body>
+    
+    <div id="loading_tarefas">                
+        <img src="./images/gif_loading.gif"/>
+    </div>
+
     <div class="container_tarefas">
         <div class="header_tarefas">
             <img src="./images/logo_tarefas.png"/>
@@ -75,9 +96,11 @@
                     <div class="inputs_tarefas desc_tarefas">
                         <label for="descricao">Descrição</label>
                         <textarea id="descricao" type="text" name="descricao" placeholder="Digite a descrição da tarefa"></textarea>
-                    </div>                
+                    </div>
+                    
+                    <div><?php $msg_campos ?></div>
 
-                    <input class="btn_add_tarefas" type="submit" name="submit" value="Adicionar"/>
+                    <input class="btn_add_tarefas" type="submit" name="submit" value="Adicionar" onclick="bloquearTela()"/>
                 </form>
 
                 <div class="listagem_tarefas">
@@ -99,13 +122,13 @@
 
                                 <div class="btns_tarefas">
                                     
-                                    <a href="?excluir=<?= $item['id']?>" class="btn_acao">
+                                    <a href="?excluir=<?= $item['id']?>" class="btn_acao" onclick="bloquearTela()">
                                         <img src="./images/delete_tarefas.png" />
                                         Excluir
                                     </a>
 
                                     <?php if($item['data_conclusao'] == '0000-00-00 00:00:00'){?>
-                                        <a href="?concluir=<?= $item['id']?>" class="btn_acao">
+                                        <a href="?concluir=<?= $item['id']?>" class="btn_acao" onclick="bloquearTela()">
                                             <img src="./images/check_tarefas.png" />
                                             Feito
                                         </a>

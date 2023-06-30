@@ -238,6 +238,40 @@ form .inputs_tarefas textarea::placeholder {
     margin-bottom: 0.5rem;
 }
 
+.loading_tarefas{
+    position: absolute;
+    background: #000000a1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading_tarefas img{
+    width: 10rem;
+}
+
+#loading_tarefas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: none;
+}
+
+#loading_tarefas img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    width: 10rem;
+}
+
 @media(max-width: 1114px){
     .add_view_tarefas {
         display: flex;

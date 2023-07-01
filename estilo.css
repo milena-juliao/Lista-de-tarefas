@@ -152,6 +152,11 @@ form .inputs_tarefas textarea::placeholder {
     margin-left: 1rem;
 }
 
+form .inputs_tarefas #titulo:focus,
+form .inputs_tarefas textarea:focus{
+    border-bottom: 1px solid white;
+}
+
 .btn_add_tarefas {
     width: 30%;
     font-weight: 600;
@@ -238,7 +243,7 @@ form .inputs_tarefas textarea::placeholder {
     margin-bottom: 0.5rem;
 }
 
-.loading_tarefas{
+/* .loading_tarefas{
     position: absolute;
     background: #000000a1;
     width: 100%;
@@ -250,7 +255,7 @@ form .inputs_tarefas textarea::placeholder {
 
 .loading_tarefas img{
     width: 10rem;
-}
+} */
 
 #loading_tarefas {
     position: fixed;
@@ -272,11 +277,30 @@ form .inputs_tarefas textarea::placeholder {
     width: 10rem;
 }
 
+.preencha_tarefas{
+    margin-bottom: 1rem;
+}
+
+.preencha_campo{
+    border: 1px solid white;
+    box-shadow: 0px 0px 8px white;
+    font-weight: bold;
+}
+
+.sem_tarefas{
+    text-align: center;
+    font-weight: bold;
+}
+
 @media(max-width: 1114px){
     .add_view_tarefas {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+
+    .content_tarefas{
+        min-height: 100vh;
     }
 
     form{

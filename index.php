@@ -8,16 +8,16 @@
         $titulo = $_POST['titulo'];
         $descricao = $_POST['descricao'];
         
-        if(!empty($titulo) && !empty($descricao)){
+        if(!empty($titulo) || !empty($descricao)){//Verifica se os campos estão vazios
             //POST
             $query = "INSERT INTO `tarefas`(`id`, `titulo`, `descricao`, `data_criacao`, `data_conclusao`) VALUES ('','$titulo','$descricao',now(),'')";
             $stm = $conexao->prepare($query);
             $stm->execute();
     
-            header('Location: http://189.47.41.71:8221/projeto_lista_de_tarefas/');//redireciona para a index, limpando o formulário
+            header('Location: http://jcode.myftp.org:8221/projeto_lista_de_tarefas/');//redireciona para a index, limpando o formulário
+        }else{
+            $mensagem_campos = "Preencha todos os campos!";
         }
-
-        // header('Location: http://localhost:8221/projeto_lista_de_tarefas/');//redireciona para a index, limpando o formulário
         
     }
 
@@ -36,8 +36,7 @@
         $stm = $conexao->prepare($query);
         $stm->execute();
 
-        header('Location: http://189.47.41.71:8221/projeto_lista_de_tarefas/');
-        // header('Location: http://localhost:8221/projeto_lista_de_tarefas/');
+        header('Location: http://jcode.myftp.org:8221/projeto_lista_de_tarefas/');
     }
 
     //DELETE
@@ -48,8 +47,7 @@
         $stm = $conexao->prepare($query);
         $stm->execute();
 
-        header('Location: http://189.47.41.71:8221/projeto_lista_de_tarefas/');
-        // header('Location: http://localhost:8221/projeto_lista_de_tarefas/');
+        header('Location: http://jcode.myftp.org:8221/projeto_lista_de_tarefas/');
     }
 ?>
 
@@ -62,15 +60,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Open+Sans:wght@300;600&display=swap" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
     <title>Lista de Tarefas</title>
 
     <script>
+        //Funções de loading
         function bloquearTela() {
-            var loading = document.getElementById('loading_tarefas');
+            var loading = $('#loading_tarefas');
 
-            loading.style.display = 'block';
+            loading.css('display', 'block');
         }
+
+        function desbloquearTela() {
+            var loading = $('#loading_tarefas');
+
+            loading.css('display', 'none');
+        }
+
+        // $(window).on('load', function() {
+        //     bloquearTela();
+        // });
+
+        // $(document).ready(function(){            
+        //     desbloquearTela();
+        // })
     </script>
 </head>
 <body>
@@ -86,24 +100,30 @@
         </div>
         <div class="content_tarefas">
             <div class="add_view_tarefas">
-                <form method="post">
-                    
-                    <div class="inputs_tarefas titulo_tarefas">
+                <form method="post">                    
+                    <div class="inputs_tarefas titulo_tarefas <?php if(isset($mensagem_campos)){echo 'preencha_campo';}?>">
                         <label for="titulo">Título</label>
-                        <input id="titulo" type="text" name="titulo" placeholder="Digite o título da tarefa"/>
+                        <input maxlength="50" id="titulo" type="text" name="titulo" placeholder="Digite o título da tarefa"/>
                     </div>
                     
-                    <div class="inputs_tarefas desc_tarefas">
+                    <div class="inputs_tarefas desc_tarefas <?php if(isset($mensagem_campos)){echo 'preencha_campo';}?>">
                         <label for="descricao">Descrição</label>
                         <textarea id="descricao" type="text" name="descricao" placeholder="Digite a descrição da tarefa"></textarea>
                     </div>
                     
-                    <div><?php $msg_campos ?></div>
+                    <?php if(isset($mensagem_campos)){?>
+                        <div class="preencha_tarefas">
+                            <p><?php echo $mensagem_campos ?></p>
+                        </div>
+                    <?php } ?>
 
                     <input class="btn_add_tarefas" type="submit" name="submit" value="Adicionar" onclick="bloquearTela()"/>
                 </form>
 
                 <div class="listagem_tarefas">
+                    <?php if(empty($todas_tarefas)){ ?>
+                        <p class="sem_tarefas">Nenhum item na lista de tarefas!</p>
+                    <?php } ?>
                     <ul>
                         <?php foreach($todas_tarefas_reverse as $item){?>
                             <li>

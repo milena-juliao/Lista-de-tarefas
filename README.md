@@ -14,6 +14,7 @@
 
 <b>Mobile</b>
 </br>
+<img src="https://github.com/milena-juliao/Lista-de-tarefas/assets/84363761/b96aeec0-3ad8-492b-9657-801f724fb27a"/>
 ![image](https://github.com/milena-juliao/Lista-de-tarefas/assets/84363761/b96aeec0-3ad8-492b-9657-801f724fb27a)
 
 

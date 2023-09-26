@@ -14,7 +14,7 @@
 
 <b>Mobile</b>
 </br>
-<img src="![image](https://github.com/milena-juliao/Lista-de-tarefas/assets/84363761/b96aeec0-3ad8-492b-9657-801f724fb27a)" alt="Descrição da imagem" width="300" height="200">
+<img src="![image](https://github.com/milena-juliao/Lista-de-tarefas/assets/84363761/b96aeec0-3ad8-492b-9657-801f724fb27a)" alt="Descrição da imagem" width="100">
 
 <h2>CRUD:</h2>
 <ul>
